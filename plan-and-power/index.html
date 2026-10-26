@@ -222,7 +222,7 @@ button:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
 .box{fill:var(--b,#fff);stroke:var(--line);stroke-width:2.4;stroke-linejoin:round}
 .hi{fill:#fff;opacity:.45}
 .t-sayac,.t-buat2,.t-grid1,.t-grid3,.t-buat{--b:var(--c3);--bs:var(--c3s)}
-.t-mcb,.t-mcb3,.t-rcd,.t-msw,.t-thermal,.t-contactor{--b:var(--c4);--bs:var(--c4s)}
+.t-mcb,.t-mcb3,.t-rcd,.t-msw,.t-thermal,.t-contactor,.t-timer{--b:var(--c4);--bs:var(--c4s)}
 .t-switch1,.t-komut,.t-vavien,.t-kruvaze,.t-buton,.t-stop,.t-start{--b:var(--c5);--bs:var(--c5s)}
 .t-lamp,.t-socket,.t-motor3{--b:var(--c1);--bs:var(--c1s)}
 .t-zil{--b:var(--c2);--bs:var(--c2s)}
@@ -253,6 +253,8 @@ button:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
 .xOn{stroke:#a06a00!important}
 .flick{animation:flick .5s steps(1) 1}
 .coilOn{fill:var(--c2)}
+.ktArc{fill:none;stroke:var(--ink);stroke-width:3;stroke-dasharray:44 44;stroke-dashoffset:44;animation:ktfill linear forwards}.ktArc.done{animation:none;stroke-dashoffset:0}
+@keyframes ktfill{to{stroke-dashoffset:0}}
 .capStop{fill:var(--c1)}.capStart{fill:var(--c3)}
 .hum{animation:hum .09s linear infinite}
 .led{fill:#fff;stroke:var(--line);stroke-width:1.4}.ledOn{fill:var(--c3);stroke:var(--line);stroke-width:1.4}
@@ -579,7 +581,7 @@ const EN={
 " (faz ile nötr/toprak arası)":" (live to neutral/earth)",
 " (iki faz arası)":" (between two phases)",
 " ya da ":" or ",
-"54 - 63 yolda":"54 - 63 on the way",
+"58 - 63 yolda":"58 - 63 on the way",
 "<b>1</b> · Alttaki <b>Lamba</b> kartına parmağını bas, paftaya sürükleyip bırak.":"<b>1</b> · Press the <b>Lamp</b> card at the bottom, drag it onto the sheet and let go.",
 "<b>2</b> · Sayacın bir ucuna dokun, parmağını kaldırmadan lambanın <b>üst</b> ucuna sürükle.":"<b>2</b> · Touch one end of the meter and, without lifting your finger, drag to the <b>top</b> end of the lamp.",
 "<b>3</b> · Şimdi sayacın öbür ucunu lambanın <b>alt</b> ucuna bağla.":"<b>3</b> · Now connect the other end of the meter to the <b>bottom</b> end of the lamp.",
@@ -722,6 +724,32 @@ const EN={
 "Kısım 3 · Güvenlik":"Part 3 · Safety",
 "Kısım 4 · Üç faz ve motor":"Part 4 · Three phases and motors",
 "Kısım 5 · Kumanda":"Part 5 · Motor control",
+"Kısım 6 · Zaman rölesi":"Part 6 · Timer relay",
+"Bant hattı":"Conveyor line",
+"{0} sn":"{0} s",
+"Zaman rölesi elle basılmaz; bobinine (A1-A2) elektrik gelince saymaya başlar.":"A timer relay isn't pressed by hand; it starts counting when its coil (A1-A2) gets power.",
+"Anahtar kapalıyken {0} yanıyor. Lamba zaman rölesinin 15-18 kontağından beslenmeli.":"{0} is on while the switch is off. The lamp must be fed through the timer relay's 15-18 contact.",
+"Anahtarı açınca zaman rölesi saymaya başlamadı. Faz anahtardan geçip rölenin A1 ucuna gelmeli, A2 ucu nötre gitmeli.":"The timer relay didn't start counting when the switch went on. The live must go through the switch to A1 of the relay, and A2 to the neutral.",
+"Anahtarı açar açmaz {0} yandı. Lamba zaman rölesinin 15-18 kontağından beslenmeli; bu kontak süre dolunca kapanır.":"{0} came on as soon as the switch went on. The lamp must be fed through the timer relay's 15-18 contact; it closes when the time is up.",
+"Süre dolunca {0} yanmadı. Faz rölenin 15 ucuna girmeli, 18 ucundan lambaya gitmeli, lambanın öbür ucu nötre.":"{0} didn't come on when the time was up. The live goes into end 15 of the relay, from end 18 to the lamp, the other end of the lamp to the neutral.",
+"Anahtarı kapatınca {0} sönmedi.":"{0} didn't go off when the switch went off.",
+"Butona basmadan {0} yanıyor.":"{0} is on before the button is pressed.",
+"Butona basınca {0} yanmadı.":"{0} didn't come on when the button was pressed.",
+"Butonu bırakınca {0} söndü. Kontaktör kendini tutmalı: 13-14 kontağı butona paralel bağlanır.":"{0} went off when the button was released. The contactor must hold itself: its 13-14 contact is wired in parallel with the button.",
+"Işık yanarken zaman rölesi saymıyor. Rölenin bobini kontaktörün bobiniyle birlikte beslenmeli: A1 kontaktörün A1 ucuna, A2 nötre.":"The timer relay isn't counting while the light is on. Its coil must be fed together with the contactor coil: A1 to A1 of the contactor, A2 to the neutral.",
+"Süre dolunca {0} sönmedi. Mühür yolu zaman rölesinin 15-16 kontağından geçmeli: bu kontak süre dolunca açılır.":"{0} didn't go off when the time was up. The holding path must go through the timer relay's 15-16 contact: it opens when the time is up.",
+"Işık sönünce kendi kendine yeniden yandı.":"After going off, the light came back on by itself.",
+"İkinci kez butona basınca ışık yanıp yeniden saymalı. Zaman rölesi her seferinde başa dönmeli: bobini kontaktörün bobinine paralel bağlanır.":"Pressing the button a second time must light it and start the count again. The timer relay must go back to the start each time: its coil is wired in parallel with the contactor coil.",
+"Anahtar kapalıyken motor çalışıyor.":"The motor runs while the switch is off.",
+"Anahtarı açar açmaz motor kalktı. Kontaktörün bobini zaman rölesinin 15-18 kontağından beslenmeli.":"The motor started as soon as the switch went on. The contactor coil must be fed through the timer relay's 15-18 contact.",
+"Anahtarı açınca zaman rölesi saymaya başlamadı. Faz anahtardan geçip rölenin A1 ucuna gelmeli.":"The timer relay didn't start counting when the switch went on. The live must go through the switch to A1 of the relay.",
+"Süre dolunca motor kalkmadı. Faz rölenin 15 ucuna girmeli, 18 ucundan kontaktörün A1 ucuna gitmeli.":"The motor didn't start when the time was up. The live goes into end 15 of the relay, and from end 18 to A1 of the contactor.",
+"Anahtarı kapatınca motor durmadı.":"The motor didn't stop when the switch went off.",
+"Anahtarı açınca iki motor birden kalktı. {0} kontaktörü zaman rölesinin 15-18 kontağından beslenmeli.":"Both motors started together when the switch went on. Contactor {0} must be fed through the timer relay's 15-18 contact.",
+"Anahtarı açınca {0} hemen kalkmalı, {1} beklemeli.":"When the switch goes on, {0} must start at once and {1} must wait.",
+"Anahtarı açınca zaman rölesi saymaya başlamadı. Rölenin A1 ucu anahtarın 1 ucuna gelmeli.":"The timer relay didn't start counting when the switch went on. A1 of the relay must come from end 1 of the switch.",
+"Süre dolunca {0} kalkmadı. Faz rölenin 15 ucuna girmeli, 18 ucundan {1} bobininin A1 ucuna gitmeli.":"{0} didn't start when the time was up. The live goes into end 15 of the relay, and from end 18 to A1 of the {1} coil.",
+"Anahtarı kapatınca iki motor da durmalı.":"Both motors must stop when the switch goes off.",
 "Lamba yanmıyor. Şimşek düğmesiyle enerjiyi kes, iki kablonun da bağlı olduğuna bak.":"The lamp isn't on. Switch off with the lightning button and check both wires are connected.",
 "Makara: {0} m":"Reel: {0} m",
 "Makarada {0} m kablo kaldı, bu kablo {1} m. Daha kısa yoldan çek ya da bir kablo sök.":"{0} m of wire left on the reel, and this wire is {1} m. Take a shorter route or remove a wire.",
@@ -1209,6 +1237,22 @@ const LV_EN={
   say:'Pressing both buttons at once blew up the panel.',
   learn:'If both contactors pull in at the same time, there is a short circuit. Each one locks the other out.',more:"The 21-22 contact is normally closed and opens when the contactor pulls in. First remove the wires going to the coils, then feed each coil through the other contactor's 21-22 contact.",
   hint:['Remove the four wires from the Start buttons and the holding contacts to the coils.','Forward side: end 14 of Start and end 14 of the first contactor go to end 21 of the second contactor. Its end 22 goes to A1 of the first coil.','Reverse side: end 14 of the second Start and end 14 of the second contactor go to end 21 of the first contactor. Its end 22 goes to A1 of the second coil.']},
+ 54:{name:'Timer relay',who:'Workshop foreman',
+  say:"When the switch goes on, the lamp shouldn't light at once, but a little later.",
+  learn:'A timer relay closes its contact a set time after its coil gets power.',more:'Coil (A1-A2): the live goes through the switch to A1, A2 goes to the neutral. Contact: the live goes into end 15 of the relay and from end 18 to the lamp; 15-18 closes when the time is up. This relay is set to 3 seconds.',
+  hint:['Put the switch on the sheet. Live to the L end of the switch, end 1 of the switch to A1 of the relay, A2 to the neutral.','Live to end 15 of the relay, end 18 to the lamp, the other end of the lamp to the neutral.','Switch on, flip the switch and wait 3 seconds.']},
+ 55:{name:'Stair light timer',who:'Building manager',
+  say:'The stair light stays on all night. It should come on with the button and go off by itself a little later.',
+  learn:'The contactor holds itself; when the time is up, the timer relay breaks that hold and the light goes off.',more:"The relay's 15-16 contact is normally closed and opens when the time is up. Run the holding path through it. The relay coil is fed together with the contactor coil: when the contactor drops out, the relay goes back to the start too.",
+  hint:['Connect A1 of the relay to A1 of the contactor, and A2 to the neutral.','Live to end 15 of the relay, end 16 to end 13 of the contactor, end 14 of the contactor to A1.','Switch on, press the button and let go: the light comes on and goes off 3 seconds later.']},
+ 56:{name:'Delayed start',who:'Workshop foreman',
+  say:'Everyone should get their hands clear before the belt moves: when the switch goes on, the motor starts a few seconds later.',
+  learn:'A timer relay makes the contactor pull in later: the motor starts when the time is up.',more:"End 18 of the relay goes to the contactor coil, and the relay coil is fed from the switch. Switching off sends the relay back to the start and stops the motor. The control live is taken from below the three-pole breaker.",
+  hint:['Put the switch down. From end 2 of the three-pole breaker to the L end of the switch.','From end 1 of the switch to A1 and to end 15 of the relay.','From end 18 of the relay to A1 of the contactor.']},
+ 57:{name:'Sequential start',who:'Workshop foreman',
+  say:'When both belts start together, the breaker trips. The second belt should start a little after the first.',
+  learn:'The first motor starts at once, the second when the timer relay runs out.',more:"Right now both contactors are fed straight from the switch, so both motors start together. Remove the wire going to K2. Feed the relay coil from the switch and run K2 through the relay's 15-18 contact.",
+  hint:['Remove the wire from the switch to A1 of K2.','From end 1 of the switch to A1 and to end 15 of the relay.','From end 18 of the relay to A1 of K2.']},
 };
 const PART_EN={
  sayac:{name:'Meter',info:"The house's power comes from here. It goes out on one wire and comes back on the other."},
@@ -1232,6 +1276,7 @@ const PART_EN={
  stop:{name:'Stop button',info:'Normally closed contact (11-12). Opens when pressed, closes again when released.'},
  start:{name:'Start button',info:'Normally open contact (13-14). Closed while held.'},
  contactor:{name:'Contactor',info:'When its coil (A1-A2) gets {V} V, its contacts close: power contacts 1-2, 3-4, 5-6 and the auxiliary contact 13-14. It also has a lock contact that works the other way (21-22): normally closed, it opens when the contactor pulls in. It is not pressed by hand.'},
+ timer:{name:'Timer relay',info:'When its coil (A1-A2) gets {V} V, it starts counting. When the time (3 seconds) is up, its contact changes over: 15-18 closes, 15-16 opens. When the coil loses power, it goes straight back to the start. It is not pressed by hand.'},
  thermal:{name:'Overload relay',info:'If the motor draws too much current, it heats up and trips. When it trips, contact 95-96 opens and contact 97-98 closes (for a fault lamp). It is set to the current on the motor label. Tap to test it.'},
  motor3:{name:'Three-phase motor',info:'Turns when three separate phases reach its U, V, W ends. Left on two phases, it hums but does not turn. Its body is earthed.'},
 };
@@ -1414,13 +1459,15 @@ const T={
   contactor:{name:'Kontaktör',pre:'K',w:150,h:80,
     terms:()=>[['1',20,0,'t'],['3',40,0,'t'],['5',60,0,'t'],['13',90,0,'t'],['21',110,0,'t'],['A1',130,0,'t'],['2',20,80,'b'],['4',40,80,'b'],['6',60,80,'b'],['14',90,80,'b'],['22',110,80,'b'],['A2',130,80,'b']],
     info:'Bobinine (A1-A2) {V} V gelince içindeki kontaklar kapanır: güç kontakları 1-2, 3-4, 5-6 ve yardımcı kontak 13-14. Bir de ters çalışan kilit kontağı var (21-22): normalde kapalıdır, kontaktör çekince açılır. Elle basılmaz.'},
+  timer:{name:'Zaman rölesi',pre:'KT',w:120,h:80,terms:()=>[['15',20,0,'t'],['A1',100,0,'t'],['16',20,80,'b'],['18',50,80,'b'],['A2',100,80,'b']],
+    info:'Bobinine (A1-A2) {V} V gelince saymaya başlar. Süre (3 saniye) dolunca kontağı değişir: 15-18 kapanır, 15-16 açılır. Bobinin elektriği kesilince hemen başa döner. Elle basılmaz.'},
   thermal:{name:'Termik röle',pre:'T',w:160,h:70,terms:()=>[['1',20,0,'t'],['3',40,0,'t'],['5',60,0,'t'],['95',110,0,'t'],['97',140,0,'t'],['2',20,70,'b'],['4',40,70,'b'],['6',60,70,'b'],['96',110,70,'b'],['98',140,70,'b']],
     vals:['1-1,6 A','2,5-4 A','4-6 A','6-10 A'],unit:'',
     info:'Motor fazla akım çekerse ısınıp atar. Atınca 95-96 kontağı açılır, 97-98 kontağı kapanır (arıza lambası için). Motor etiketindeki akıma göre ayarlanır. Dokununca test eder.'},
   motor3:{name:'Üç fazlı motor',pre:'M',w:80,h:90,terms:()=>[['U',20,0,'t'],['V',40,0,'t'],['W',60,0,'t'],['PE',40,90,'b']],
     info:'U, V, W uçlarına üç ayrı faz gelince döner. İki faz kalırsa dönmez, uğuldar. Gövdesi toprağa bağlanır.'},
 };
-const defSt=t=>({lamp:{out:0},mcb:{on:1,trip:0},mcb3:{on:1,trip:0},rcd:{on:1,trip:0},switch1:{on:0},komut:{a:0,b:0},vavien:{p:0},kruvaze:{p:0},buton:{pr:0},stop:{pr:0},start:{pr:0},contactor:{en:0},thermal:{trip:0},msw:{on:1,trip:0}})[t]||{};
+const defSt=t=>({lamp:{out:0},mcb:{on:1,trip:0},mcb3:{on:1,trip:0},rcd:{on:1,trip:0},switch1:{on:0},komut:{a:0,b:0},vavien:{p:0},kruvaze:{p:0},buton:{pr:0},stop:{pr:0},start:{pr:0},contactor:{en:0},timer:{en:0,done:0},thermal:{trip:0},msw:{on:1,trip:0}})[t]||{};
 const nm=c=>{const k=c.id.replace(/^[A-Z]+/,'');return c.type==='stop'?'Stop'+(k?' '+(+k+1):''):c.type==='start'?'Start'+(k?' '+(+k+1):''):c.id==='SRC'?TL('Şebeke'):c.type==='rcd'&&LANG==='en'?(REG.words?'GFCI':'RCD')+k:c.id};
 /* a value as shown: English writes 1.6 A, Turkish 1,6 A */
 const dv=v=>LANG==='en'?String(v).replace(',','.'):String(v);
@@ -1808,6 +1855,35 @@ const LEVELS=[
      ['Q1.2','STOP.11','p1'],['STOP.12','T1.95','f2'],['T1.96','START.13','f2'],['START.13','START1.13','f2'],['T1.96','K1.13','f2'],['K1.13','K2.13','f2'],['K1.A2','SRC.N','n'],['K2.A2','SRC.N','n']],parts:{},req:['interlock','thermal:in'],
    preWires:[['START.14','K1.A1','f2',null,1],['K1.14','K1.A1','f2',null,1],['START1.14','K2.A1','f2',null,1],['K2.14','K2.A1','f2',null,1]],
    sol:{drop:'bad',comps:[],wires:[['START.14','K2.21','f2'],['K1.14','K2.21','f2'],['K2.22','K1.A1','f2'],['START1.14','K1.21','f2'],['K2.14','K1.21','f2'],['K1.22','K2.A1','f2']]}},
+  {id:54,name:'Zaman rölesi',who:'Atölye ustası',cols:['p1','n','f2'],
+   say:`Anahtarı açınca lamba hemen değil, biraz sonra yansın.`,
+   learn:`Zaman rölesi, bobinine elektrik geldikten belli bir süre sonra kontağını kapatır.`,more:`Bobin (A1-A2): faz anahtardan geçip A1'e gelir, A2 nötre gider. Kontak: faz rölenin 15 ucuna girer, 18 ucundan lambaya gider; 15-18 süre dolunca kapanır. Bu rölede süre 3 saniye.`,
+   hint:[`Anahtarı paftaya koy. Faz anahtarın L ucuna, anahtarın 1 ucu rölenin A1 ucuna, A2 nötre.`,`Faz rölenin 15 ucuna, 18 ucu lambaya, lambanın öbür ucu nötre.`,`Enerji ver, anahtarı aç ve 3 saniye bekle.`],
+   supply:{type:'sayac',x:20,y:20},fixed:[{type:'timer',x:120,y:170},{type:'lamp',x:260,y:320}],parts:{switch1:1},req:['timer:lamp'],
+   sol:{comps:[{type:'switch1',x:200,y:30}],wires:[['SRC.L1','S1.L','p1'],['S1.1','KT1.A1','f2'],['KT1.A2','SRC.N','n'],['SRC.L1','KT1.15','p1'],['KT1.18','E1.a','f2'],['E1.b','SRC.N','n']]}},
+  {id:55,name:'Merdiven otomatiği',who:'Apartman yöneticisi',cols:['p1','n','f2'],
+   say:`Merdiven ışığı bütün gece açık kalıyor. Butona basınca yansın, biraz sonra kendi sönsün.`,
+   learn:`Kontaktör kendini tutar; zaman rölesi süre dolunca bu tutmayı keser ve ışık söner.`,more:`Rölenin 15-16 kontağı normalde kapalıdır, süre dolunca açılır. Mühür yolunu bu kontaktan geçir. Rölenin bobini kontaktörün bobiniyle birlikte beslenir: kontaktör düşünce röle de başa döner.`,
+   hint:[`Rölenin A1 ucunu kontaktörün A1 ucuna, A2 ucunu nötre bağla.`,`Faz rölenin 15 ucuna, 16 ucu kontaktörün 13 ucuna, kontaktörün 14 ucu A1'e.`,`Enerji ver, butona bas ve bırak: ışık yanar, 3 saniye sonra söner.`],
+   supply:{type:'sayac',x:20,y:20},fixed:[{type:'buton',x:250,y:30},{type:'contactor',x:20,y:170},{type:'timer',x:210,y:170},{type:'lamp',x:60,y:340}],
+   fixedWires:[['SRC.L1','B1.1','p1'],['B1.2','K1.A1','f2'],['K1.A2','SRC.N','n'],['SRC.L1','K1.1','p1'],['K1.2','E1.a','f2'],['E1.b','SRC.N','n']],parts:{},req:['timer:stair'],
+   sol:{comps:[],wires:[['K1.A1','KT1.A1','f2'],['KT1.A2','SRC.N','n'],['SRC.L1','KT1.15','p1'],['KT1.16','K1.13','f2'],['K1.14','K1.A1','f2']]}},
+  {id:56,name:'Gecikmeli kalkış',who:'Atölye ustası',cols:['p1','p2','p3','n','f2'],vb:VB_C,
+   say:`Bant kalkmadan herkes elini çeksin: anahtarı açınca motor birkaç saniye sonra kalksın.`,
+   learn:`Zaman rölesi kontaktörü geç çektirir: motor süre dolunca kalkar.`,more:`Rölenin 18 ucu kontaktörün bobinine gider, rölenin bobini anahtardan beslenir. Anahtarı kapatınca röle başa döner, motor da durur. Kumandanın fazı üçlü sigortanın altından alınır.`,
+   hint:[`Anahtarı koy. Üçlü sigortanın 2 ucundan anahtarın L ucuna.`,`Anahtarın 1 ucundan rölenin A1 ucuna ve 15 ucuna.`,`Rölenin 18 ucundan kontaktörün A1 ucuna.`],
+   supply:{type:'grid3',x:20,y:20},fixed:[...MOTOR_PANEL_FIXED,{type:'motor3',x:40,y:370},{type:'timer',x:250,y:230}],
+   fixedWires:[...M_PE,...PWR_IN,...K_M,['K1.A2','SRC.N','n'],['KT1.A2','SRC.N','n']],parts:{switch1:1},req:['timer:motor'],
+   sol:{comps:[{type:'switch1',x:250,y:110}],wires:[['Q1.2','S1.L','p1'],['S1.1','KT1.A1','f2'],['S1.1','KT1.15','f2'],['KT1.18','K1.A1','f2']]}},
+  {id:57,name:'Sıralı kalkış',who:'Atölye ustası',cols:['p1','p2','p3','n','f2'],vb:VB_R,
+   say:`İki bant birden kalkınca sigorta atıyor. İkinci bant birincinin biraz arkasından kalksın.`,
+   learn:`Birinci motor hemen kalkar, ikinci motor zaman rölesinin süresi dolunca.`,more:`Şu an iki kontaktör de doğrudan anahtardan besleniyor, iki motor birden kalkıyor. K2'ye giden o kabloyu sök. Rölenin bobinini anahtardan besle, K2'yi rölenin 15-18 kontağından geçir.`,
+   hint:[`Anahtardan K2'nin A1 ucuna giden kabloyu sök.`,`Anahtarın 1 ucundan rölenin A1 ucuna ve 15 ucuna.`,`Rölenin 18 ucundan K2'nin A1 ucuna.`],
+   supply:{type:'grid3',x:20,y:20},fixed:[{type:'mcb3',x:20,y:110,val:16},{type:'switch1',x:150,y:110},{type:'timer',x:280,y:110},{type:'contactor',x:20,y:250},{type:'contactor',x:230,y:250},{type:'motor3',x:40,y:420},{type:'motor3',x:250,y:420}],
+   fixedWires:[...M_PE,['M2.PE','SRC.PE','pe'],...PWR_IN,['Q1.2','K2.1','p1'],['Q1.4','K2.3','p2'],['Q1.6','K2.5','p3'],...K_M,['K2.2','M2.U','p1'],['K2.4','M2.V','p2'],['K2.6','M2.W','p3'],
+     ['Q1.2','S1.L','p1'],['S1.1','K1.A1','f2'],['K1.A2','SRC.N','n'],['K2.A2','SRC.N','n'],['KT1.A2','SRC.N','n']],parts:{},req:['timer:seq'],
+   preWires:[['S1.1','K2.A1','f2',null,1]],
+   sol:{drop:'bad',comps:[],wires:[['S1.1','KT1.A1','f2'],['S1.1','KT1.15','f2'],['KT1.18','K2.A1','f2']]}},
 ];
 /* the texts of parts and sheets in the player's language and region. The Turkish originals and the sheet layouts are kept,
    so changing the region redoes it. North America swaps a few sheets' layouts (US: panels with the GFCI on one circuit). */
@@ -1828,7 +1904,7 @@ function localize(){
     delete d._reel;
   }
 }
-const PLAYER_TYPES=['msw','switch1','komut','vavien','kruvaze','buton','zil','lamp','mcb','mcb3','rcd','socket','stop','start','contactor','thermal','motor3'];
+const PLAYER_TYPES=['msw','switch1','komut','vavien','kruvaze','buton','zil','lamp','mcb','mcb3','rcd','socket','stop','start','contactor','timer','thermal','motor3'];
 setRegion(saved.region||'tr');
 
 /* ---------- circuit ---------- */
@@ -1850,6 +1926,7 @@ function inner(c){
     case 'stop':return s.pr?[]:[['11','12']];
     case 'start':return s.pr?[['13','14']]:[];
     case 'contactor':return s.en?[['1','2'],['3','4'],['5','6'],['13','14']]:[['21','22']];
+    case 'timer':return s.done?[['15','18']]:[['15','16']];
     case 'thermal':return [['1','2'],['3','4'],['5','6']].concat(s.trip?[['97','98']]:[['95','96']]);
   }
   return [];
@@ -1871,7 +1948,7 @@ function nets(opt={}){
   return {u,ph,pv:new Set(pl),N,PE,short,role};
 }
 function simulate(power){
-  const ks=cur.comps.filter(c=>c.type==='contactor');
+  const ks=cur.comps.filter(c=>c.type==='contactor'||c.type==='timer');
   let r;
   for(let i=0;i<12;i++){
     r=nets();let ch=false;
@@ -1880,6 +1957,7 @@ function simulate(power){
       let en=power&&!r.short&&((r.pv.has(a)&&b===r.N)||(r.pv.has(b)&&a===r.N))?1:0;
       if(c.st.force===0||c.st.force===1)en=c.st.force;
       if(en!==(c.st.en?1:0)){c.st.en=en;ch=true}
+      if(c.type==='timer'&&!en&&c.st.done){c.st.done=0;ch=true}
     }
     if(!ch)break;
   }
@@ -1891,7 +1969,7 @@ function simulate(power){
       out.burn[c.id]=on&&P(a)&&P(b)&&a!==b;out.phase[c.id]=on&&(P(a)||P(b))}
     if(c.type==='zil'){const a=at(c,'a'),b=at(c,'b');out.ring[c.id]=on&&((P(a)&&b===r.N)||(P(b)&&a===r.N));out.phase[c.id]=on&&(P(a)||P(b))}
     if(c.type==='socket'){const l=at(c,'L'),n=at(c,'N');out.live[c.id]=on&&((P(l)&&n===r.N)||(P(n)&&l===r.N));out.grounded[c.id]=r.PE!==null&&at(c,'PE')===r.PE}
-    if(c.type==='contactor')out.coil[c.id]=on&&(P(at(c,'A1'))||P(at(c,'A2')));
+    if(c.type==='contactor'||c.type==='timer')out.coil[c.id]=on&&(P(at(c,'A1'))||P(at(c,'A2')));
     if(c.type==='motor3'){
       out.grounded[c.id]=r.PE!==null&&at(c,'PE')===r.PE;
       const ps=['U','V','W'].map(t=>on?r.role(at(c,t)):null),d=new Set(ps.filter(Boolean));
@@ -1918,7 +1996,7 @@ function rcdReason(k,sim){
   const prot=x=>x===oL||x===oN;
   for(const c of cur.comps){
     let a,b;
-    if(c.type==='lamp'&&sim.lit[c.id]){a='a';b='b'}else if(c.type==='contactor'&&c.st.en){a='A1';b='A2'}else continue;
+    if(c.type==='lamp'&&sim.lit[c.id]){a='a';b='b'}else if((c.type==='contactor'||c.type==='timer')&&c.st.en){a='A1';b='A2'}else continue;
     const x=r.u.find(c.id+'.'+a),y=r.u.find(c.id+'.'+b);
     if((prot(x)||prot(y))&&!((x===oL&&y===oN)||(x===oN&&y===oL)))
       return (x===r.PE||y===r.PE)?TL('{0} toprağa bağlanmış, akım topraktan dönüyor.',c.id):TL('{0} üstünden geçen akım röleden geçmeyen bir yoldan dönüyor.',c.id);
@@ -1945,6 +2023,7 @@ function gradeCore(){
     if(c.type==='thermal')c.st.trip=0;
     if(c.type==='stop'||c.type==='start'||c.type==='buton')c.st.pr=0;
     if(c.type==='contactor')c.st.en=0;
+    if(c.type==='timer'){c.st.en=0;c.st.done=0}
     if(c.type==='lamp')c.st.out=0;
   }
   const ins=[];
@@ -1971,7 +2050,7 @@ function gradeCore(){
   }
   for(const r of rows)for(const L of lamps)if(r.sim.dim[L.id])
     return fail(TL('{0}{1} sönük yanıyor: başka bir lambayla arka arkaya (seri) bağlanmış. Her lamba kendi yolunu almalı, iki ucu da ayrı ayrı faza ve nötre varmalı.',r.desc?TL('{0} iken',r.desc)+' ':'',L.id));
-  if(!d.lampCols)for(const L of lamps)if(lamps.length&&!rows.some(r=>r.sim.lit[L.id]))return fail(TL('{0} hiçbir durumda yanmıyor. Elektrik bir ucundan girip öbüründen sayaca dönebilmeli.',L.id));
+  if(!d.lampCols&&!of('timer').length)for(const L of lamps)if(lamps.length&&!rows.some(r=>r.sim.lit[L.id]))return fail(TL('{0} hiçbir durumda yanmıyor. Elektrik bir ucundan girip öbüründen sayaca dönebilmeli.',L.id));
   if(req.has('light:parallel'))for(const L of lamps){L.st.out=1;const sm=simulate(true);L.st.out=0;
     for(const M of lamps)if(M!==L&&!sm.lit[M.id])return fail(TL('{0} ampulü sökülünce {1} de sönüyor. Her lamba kendi yolunu almalı.',L.id,M.id))}
   if(req.has('light:pair')){const used=[];
@@ -2062,7 +2141,7 @@ function gradeCore(){
   };
   if(K&&of('mcb3').length){const qs=of('mcb3'),on=v=>{qs.forEach(q=>q.st.on=v);of('contactor').forEach(k=>k.st.en=0)};
     on(0);of('start').forEach(b=>b.st.pr=1);of('switch1').forEach(w=>w.st.on=1);const sm=simulate(true);of('start').forEach(b=>b.st.pr=0);on(1);
-    if(of('contactor').some(k=>sm.coil[k.id])||lamps.some(L=>sm.lit[L.id]))return fail(TL('Üçlü sigorta kapalıyken kumanda devresi hâlâ elektrik alıyor. Kumandanın fazını sayaçtan değil, üçlü sigortanın altından (2 ucu) al.'))}
+    if(of('contactor').concat(of('timer')).some(k=>sm.coil[k.id])||lamps.some(L=>sm.lit[L.id]))return fail(TL('Üçlü sigorta kapalıyken kumanda devresi hâlâ elektrik alıyor. Kumandanın fazını sayaçtan değil, üçlü sigortanın altından (2 ucu) al.'))}
   const wnet=()=>{const u=UF();for(const w of cur.wires)if(!w.cut)u.union(w.a,w.b);return u};
   if(req.has('motor:direct')){
     const e=motorCheck(simulate(true),true,TL('{0} dönmüyor. U, V, W uçlarına üç ayrı faz gelmeli.',M.id));if(e)return e;
@@ -2147,6 +2226,42 @@ function gradeCore(){
     b1.st.pr=1;e=motorCheck(simulate(true),true,TL('Motor ters dönerken düz butonuna basınca kısa devre oldu ya da motor durdu. Kilitleme eksik.'));if(e)return e;
     if(simulate(true).run[M.id]!==-1)return fail(TL('Motor ters dönerken düz butonuna basınca yön değişti. Kilitleme eksik.'));
     b1.st.pr=0;sp.st.pr=1;simulate(true);sp.st.pr=0;simulate(true)}
+  /* timer sheets: wait() lets every counting timer run out */
+  const KT=of('timer')[0],wait=()=>{for(const k of of('timer'))if(k.st.en)k.st.done=1;return simulate(true)};
+  if(req.has('timer:lamp')){const sw=of('switch1')[0],L=lamps[0];
+    sw.st.on=0;let sm=simulate(true);if(sm.lit[L.id])return fail(TL('Anahtar kapalıyken {0} yanıyor. Lamba zaman rölesinin 15-18 kontağından beslenmeli.',L.id));
+    sw.st.on=1;sm=simulate(true);
+    if(!KT.st.en)return fail(TL('Anahtarı açınca zaman rölesi saymaya başlamadı. Faz anahtardan geçip rölenin A1 ucuna gelmeli, A2 ucu nötre gitmeli.'));
+    if(sm.lit[L.id])return fail(TL('Anahtarı açar açmaz {0} yandı. Lamba zaman rölesinin 15-18 kontağından beslenmeli; bu kontak süre dolunca kapanır.',L.id));
+    sm=wait();if(!sm.lit[L.id])return fail(TL('Süre dolunca {0} yanmadı. Faz rölenin 15 ucuna girmeli, 18 ucundan lambaya gitmeli, lambanın öbür ucu nötre.',L.id));
+    sw.st.on=0;sm=simulate(true);if(sm.lit[L.id])return fail(TL('Anahtarı kapatınca {0} sönmedi.',L.id))}
+  if(req.has('timer:stair')){const B=of('buton')[0],L=lamps[0];
+    B.st.pr=0;let sm=simulate(true);if(sm.lit[L.id])return fail(TL('Butona basmadan {0} yanıyor.',L.id));
+    B.st.pr=1;sm=simulate(true);if(!sm.lit[L.id])return fail(TL('Butona basınca {0} yanmadı.',L.id));
+    B.st.pr=0;sm=simulate(true);if(!sm.lit[L.id])return fail(TL('Butonu bırakınca {0} söndü. Kontaktör kendini tutmalı: 13-14 kontağı butona paralel bağlanır.',L.id));
+    if(!KT.st.en)return fail(TL('Işık yanarken zaman rölesi saymıyor. Rölenin bobini kontaktörün bobiniyle birlikte beslenmeli: A1 kontaktörün A1 ucuna, A2 nötre.'));
+    sm=wait();if(sm.lit[L.id])return fail(TL('Süre dolunca {0} sönmedi. Mühür yolu zaman rölesinin 15-16 kontağından geçmeli: bu kontak süre dolunca açılır.',L.id));
+    sm=simulate(true);if(sm.lit[L.id])return fail(TL('Işık sönünce kendi kendine yeniden yandı.'));
+    B.st.pr=1;simulate(true);B.st.pr=0;sm=simulate(true);if(!sm.lit[L.id]||!KT.st.en)return fail(TL('İkinci kez butona basınca ışık yanıp yeniden saymalı. Zaman rölesi her seferinde başa dönmeli: bobini kontaktörün bobinine paralel bağlanır.'));
+    B.st.pr=0}
+  if(req.has('timer:motor')){const sw=of('switch1')[0];
+    sw.st.on=0;let e=motorCheck(simulate(true),false,TL('Anahtar kapalıyken motor çalışıyor.'));if(e)return e;
+    sw.st.on=1;e=motorCheck(simulate(true),false,TL('Anahtarı açar açmaz motor kalktı. Kontaktörün bobini zaman rölesinin 15-18 kontağından beslenmeli.'));if(e)return e;
+    if(!KT.st.en)return fail(TL('Anahtarı açınca zaman rölesi saymaya başlamadı. Faz anahtardan geçip rölenin A1 ucuna gelmeli.'));
+    e=motorCheck(wait(),true,TL('Süre dolunca motor kalkmadı. Faz rölenin 15 ucuna girmeli, 18 ucundan kontaktörün A1 ucuna gitmeli.'));if(e)return e;
+    sw.st.on=0;e=motorCheck(simulate(true),false,TL('Anahtarı kapatınca motor durmadı.'));if(e)return e}
+  if(req.has('timer:seq')){const sw=of('switch1')[0],[M1,M2]=of('motor3');
+    const look=(sm,a,b,msg)=>{
+      if(sm.short)return fail(TL('Kısa devre oluyor, sigorta atar.'));
+      for(const m of [M1,M2])if(sm.hum[m.id])return fail(TL('{0} iki fazda kaldı: uğulduyor ama dönmüyor. U, V, W uçlarına üç ayrı faz gelmeli.',m.id));
+      return !!sm.run[M1.id]===a&&!!sm.run[M2.id]===b?null:fail(msg)};
+    sw.st.on=0;let e=look(simulate(true),false,false,TL('Anahtar kapalıyken motor çalışıyor.'));if(e)return e;
+    sw.st.on=1;let sm=simulate(true);
+    if(sm.run[M1.id]&&sm.run[M2.id])return fail(TL('Anahtarı açınca iki motor birden kalktı. {0} kontaktörü zaman rölesinin 15-18 kontağından beslenmeli.','K2'));
+    e=look(sm,true,false,TL('Anahtarı açınca {0} hemen kalkmalı, {1} beklemeli.',M1.id,M2.id));if(e)return e;
+    if(!KT.st.en)return fail(TL('Anahtarı açınca zaman rölesi saymaya başlamadı. Rölenin A1 ucu anahtarın 1 ucuna gelmeli.'));
+    e=look(wait(),true,true,TL('Süre dolunca {0} kalkmadı. Faz rölenin 15 ucuna girmeli, 18 ucundan {1} bobininin A1 ucuna gitmeli.',M2.id,'K2'));if(e)return e;
+    sw.st.on=0;e=look(simulate(true),false,false,TL('Anahtarı kapatınca iki motor da durmalı.'));if(e)return e}
   if(req.has('stop:lamp')){const sp=of('stop')[0],L=lamps[0];
     sp.st.pr=0;let sm=simulate(true);if(!sm.lit[L.id])return fail(TL('Stop butonuna basmıyorken lamba yanmalı. Stop normalde yolu kapalı tutar: faz stopun 11 ucundan girip 12 ucundan lambaya gitmeli.'));
     sp.st.pr=1;sm=simulate(true);sp.st.pr=0;if(sm.lit[L.id])return fail(TL('Stop\'a basınca lamba sönmedi. Stop lambanın yolunun üstünde olmalı.'))}
@@ -2538,6 +2653,18 @@ function drawComp(c,sim){
       o+=`<rect class="${en?'coilOn':'box'}" x="${x+120}" y="${y+30}" width="20" height="20" style="stroke:var(--ink);stroke-width:2"/>`;
       o+=`<line class="dash" x1="${x+12}" y1="${y+40}" x2="${x+119}" y2="${y+40}"/>`+tx(x+98,y+60,c.id,'lbl');
       break}
+    case 'timer':{
+      /* one change-over contact: 15 is common, 16 opens and 18 closes when the time is up. The clock fills while it counts */
+      const en=!!s.en,dn=!!s.done,cx=x+46,cy=y+20,el=en&&!dn&&s.t0?Math.min(TIMER_S,(Date.now()-s.t0)/1000):0;
+      o+=box(c)+ln(x+20,y,x+20,y+26,'thin')+post(x+20,y+28)+ln(x+20,y+54,x+20,y+80,'thin')+post(x+20,y+54)+ln(x+50,y+54,x+50,y+80,'thin')+post(x+50,y+54);
+      o+=dn?lever(x+20,y+28,x+48,y+52):lever(x+20,y+28,x+20,y+52);
+      o+=ln(x+100,y,x+100,y+40,'thin')+ln(x+100,y+60,x+100,y+80,'thin');
+      o+=`<rect class="${en?'coilOn':'box'}" x="${x+90}" y="${y+40}" width="20" height="20" style="stroke:var(--ink);stroke-width:2"/>`;
+      o+=`<line class="dash" x1="${x+89}" y1="${y+48}" x2="${x+(dn?36:22)}" y2="${y+42}"/>`;
+      o+=`<circle cx="${cx}" cy="${cy}" r="7" fill="none" style="stroke:var(--ink);stroke-width:1.4"/>`;
+      if(en)o+=`<circle class="ktArc${dn?' done':''}" cx="${cx}" cy="${cy}" r="7" transform="rotate(-90 ${cx} ${cy})" style="animation-duration:${TIMER_S}s;animation-delay:-${el}s"/>`;
+      o+=ln(cx,cy,cx,cy-5,'thin')+ln(cx,cy,cx+4,cy,'thin')+tx(cx+11,cy+4,TL('{0} sn',TIMER_S),'sm')+tx(x+62,y+62,c.id,'sm');
+      break}
     case 'thermal':{
       for(const dx of [20,40,60]){o+='';}
       o+=box(c);
@@ -2925,6 +3052,10 @@ function update(){
   }
   S.flick={};for(const k in sim.lit)if(sim.lit[k]&&!S.prevLit[k])S.flick[k]=true;
   for(const c of cur.comps)if(c.type==='contactor'){if(!!c.st.en!==!!S.prevEn[c.id])sfx.contactor(!!c.st.en);S.prevEn[c.id]=!!c.st.en}
+  for(const c of cur.comps)if(c.type==='timer'){const s=c.st;
+    if(!s.en)s.t0=0;
+    else if(!s.done&&!s.t0){const t0=s.t0=Date.now();setTimeout(()=>{if(c.st.t0!==t0||!c.st.en||!cur.comps.includes(c))return;c.st.done=1;update()},TIMER_S*1000)}
+    if(!!s.done!==!!S.prevEn[c.id+':t'])sfx.contactor(!!s.done);S.prevEn[c.id+':t']=!!s.done}
   const ringing=Object.values(sim.ring).some(Boolean);sfx.bell(ringing);S.ringing=ringing;
   sfx.motor(Object.values(sim.run).some(Boolean));
   const born=Object.keys(S.flick).filter(k=>S.flick[k]);
@@ -2983,7 +3114,7 @@ function shock(){
 }
 function svgPt(e){const svg=$('svg'),pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());return [p.x,p.y]}
 /* zoom and pan: the viewBox is the level's frame shrunk by S.view.s (1 to 2.5) and slid around; every hit test goes through the screen matrix, so it all keeps working */
-const pts=new Map(),ZMAX=2.5,ZMIN=.5;
+const pts=new Map(),ZMAX=2.5,ZMIN=.5,TIMER_S=3;
 function applyView(){
   const v=S.view,{w,h}=cur.vb,vw=w/v.s,vh=h/v.s;
   /* the box on screen shows a bit more than the viewBox (meet adds a margin on one axis). Zoomed in, the visible area stays inside the sheet;
@@ -3040,7 +3171,7 @@ function viaLoad(k){
   const r=nets(),sc=cur.src,m=T[sc.type].src(sc);if(!m.N)return false;
   for(const c of cur.comps){
     if((c.type==='lamp'&&!c.st.out)||c.type==='zil')r.u.union(c.id+'.a',c.id+'.b');
-    if(c.type==='contactor')r.u.union(c.id+'.A1',c.id+'.A2');
+    if(c.type==='contactor'||c.type==='timer')r.u.union(c.id+'.A1',c.id+'.A2');
   }
   return r.u.find(k)===r.u.find(sc.id+'.'+m.N);
 }
@@ -3096,6 +3227,8 @@ function crowded(e,p){
 function onDown(e){
   if(S.drag||!$('modal').hidden)return;
   try{$('svg').setPointerCapture(e.pointerId)}catch(err){}
+  /* a first finger always starts a fresh gesture, so a finger that was lifted unseen can never turn a drag into a pinch */
+  if(e.isPrimary){pts.clear();S.pinch=null}
   pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
   if(pts.size===2)return startPinch();
   if(pts.size>2)return;
@@ -3161,8 +3294,9 @@ function onMove(e){
   }
 }
 function onUp(e){
+  const had=pts.delete(e.pointerId);
   if(S.drag)return dragEnd(e);
-  if(pts.delete(e.pointerId)&&S.pinch){if(pts.size<2)S.pinch=null;ptr=null;return}
+  if(had&&S.pinch){if(pts.size<2)S.pinch=null;ptr=null;return}
   const pr=ptr;ptr=null;
   if(pr&&pr.timer)clearTimeout(pr.timer);
   release();
@@ -3193,6 +3327,7 @@ function tapComp(c,p){
       if(!c.val)return askValue(c);
       s.trip=s.trip?0:1;msg=s.trip?TL('{0} test edildi: termik attı.',c.id):TL('{0} kuruldu (reset).',c.id);snd=sfx.breaker;break;
     case 'contactor':return toast(TL('Kontaktör elle basılmaz; bobinine (A1-A2) elektrik gelince çeker.'));
+    case 'timer':return toast(TL('Zaman rölesi elle basılmaz; bobinine (A1-A2) elektrik gelince saymaya başlar.'));
     case 'grid1':case 'grid3':case 'buat':return toast(S.power?TL('Enerjiyi kesmek için alttaki şimşek düğmesine bas.'):TL('Enerji vermek için alttaki şimşek düğmesine bas.'));
     case 'stop':case 'start':case 'buton':return;
     default:setStatus();return toast(fmt(T[c.type].info),3000);
@@ -3317,7 +3452,7 @@ function startFault(){
 }
 function showScreen(s){S.screen=s;$('home').hidden=s!=='home';$('levelScr').hidden=s!=='levels';$('game').hidden=s!=='game';$('toast').hidden=true;if(s!=='game'){sfx.motor(false);sfx.bell(false);renderMenu()}setNight();musicMood();
   if(s==='levels'){const L=LEVELS[nextLevel()],k=CHAPTERS.findIndex(([,a,b])=>L.id>=a&&L.id<=b),el=document.querySelector(`#levels [data-ch="${k}"]`),w=$('levels');w.scrollTop=k>0&&el?el.offsetTop-w.offsetTop-4:0}}
-const CHAPTERS=[['Kısım 1 · Elektrik nedir',1,7],['Kısım 2 · Evin elektriği',8,21],['Kısım 3 · Güvenlik',22,34],['Kısım 4 · Üç faz ve motor',35,40],['Kısım 5 · Kumanda',41,53]];
+const CHAPTERS=[['Kısım 1 · Elektrik nedir',1,7],['Kısım 2 · Evin elektriği',8,21],['Kısım 3 · Güvenlik',22,34],['Kısım 4 · Üç faz ve motor',35,40],['Kısım 5 · Kumanda',41,53],['Kısım 6 · Zaman rölesi',54,57]];
 const nextLevel=()=>{const i=LEVELS.findIndex(l=>!saved.stars[l.id]);return i<0?LEVELS.length-1:i};
 const THUMBS=['<path d="M4 6H30V20M4 20H30" />','<path d="M4 6H20V20H36M20 13H36" />','<path d="M4 6H36M10 6V20H30V6" />'];
 const doneCount=()=>LEVELS.filter(l=>saved.stars[l.id]).length;
@@ -3368,7 +3503,8 @@ const HOUSE=[
   {n:'Pres',ids:[41,42,43,44,45,46],r:[312,104,40,46],m:1},
   {n:'Kompresör',ids:[47,48,49],r:[232,150,40,46],m:1},
   {n:'Kumanda',ids:[50,51],r:[272,150,40,46],m:1},
-  {n:'Garaj kapısı',ids:[52,53],r:[312,150,40,46],d:'M318 196v-36h28v36M318 168h28M318 176h28M318 184h28'}
+  {n:'Garaj kapısı',ids:[52,53],r:[312,150,40,46],d:'M318 196v-36h28v36M318 168h28M318 176h28M318 184h28'},
+  {n:'Bant hattı',ids:[54,55,56,57],r:[232,58,120,46],m:1,d:'M240 92h50M240 98h50'}
 ];
 function houseSvg(){
   const nx=LEVELS[nextLevel()].id,seen=saved.roomsLit||[],lit=[];
@@ -3387,7 +3523,7 @@ function houseSvg(){
     o+=`<g class="${cls}">${g}</g>`;
   }
   // the shells: house with its roof, the workshop with a sawtooth roof, the ground
-  o+=`<g filter="url(#wob)"><path class="hs" d="M12 196V64H196V196M4 64H204L104 18Z"/><path class="hs" d="M232 196V104L232 84 262 104 262 84 292 104 292 84 322 104 322 84 352 104V196"/><path class="hs" d="M0 196H364M12 196v32h184v-32" style="stroke-width:1.6"/></g>`;
+  o+=`<g filter="url(#wob)"><path class="hs" d="M12 196V64H196V196M4 64H204L104 18Z"/><path class="hs" d="M232 196V58L232 38 262 58 262 38 292 58 292 38 322 58 322 38 352 58V196"/><path class="hs" d="M0 196H364M12 196v32h184v-32" style="stroke-width:1.6"/></g>`;
   // dimension lines, as on a building plan
   const dim=(a,b,y,t)=>`<path class="hdim" d="M${a} ${y}H${b}M${a} ${y-4}v8M${b} ${y-4}v8M${a+2} ${y+2}l-4 -4M${b+2} ${y+2}l-4 -4"/><text class="hdt" x="${(a+b)/2}" y="${y-3}" text-anchor="middle">${t}</text>`;
   o+=dim(12,196,242,LANG==='en'?'9.20':'9,20')+dim(232,352,210,LANG==='en'?'6.00':'6,00')+'</svg>';
@@ -3416,7 +3552,7 @@ function renderMenu(){
   $('levels').innerHTML=CHAPTERS.map((ch,k)=>{const [name,a,b]=ch,[cn,ct]=TL(name).split(' · '),ls=LEVELS.filter(l=>l.id>=a&&l.id<=b);
     const st=ls.reduce((t,l)=>t+(saved.stars[l.id]||0),0);
     return `<section class="chapcard" data-ch="${k}"><div class="chaphd"><div><small>${cn}</small><b>${ct}</b></div><span class="cs">${STAR('currentColor','currentColor')}${st} / ${ls.length*3}</span></div>${chapterMap(ch,nx)}</section>`}).join('')
-    +`<div class="soon">${TL('54 - 63 yolda')}</div>`;
+    +`<div class="soon">${TL('58 - 63 yolda')}</div>`;
 }
 /* the streak counts days: any approved sheet or fixed fault keeps it going, a missed day starts it again */
 const dayKey=o=>{const d=new Date();d.setDate(d.getDate()-o);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
