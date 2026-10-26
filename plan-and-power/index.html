@@ -76,6 +76,7 @@ button:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
 .hname h1{margin:0;font:800 clamp(26px,8.4vw,36px)/1 var(--hand);white-space:nowrap}
 .hname h1 em{font-style:normal;color:var(--wBrown)}
 .hname p{margin:4px 0 0;font:700 10px var(--hand);letter-spacing:.14em;color:var(--ink2)}
+.hname .real{display:inline-block;margin:9px 0 2px;padding:2px 8px 3px;border:1.5px solid var(--wBrown);color:var(--wBrown);font:700 11px/1.25 var(--hand);transform:rotate(-2deg);transform-origin:left center}
 .house{flex:1;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;background:none;padding:0;color:var(--ink);cursor:pointer}
 .house svg{width:100%;max-height:min(40vh,250px);display:block;overflow:visible}
 .house small{font:700 12px var(--hand);color:var(--ink2)}
@@ -491,7 +492,7 @@ body.night .sheet{--dot:rgba(233,226,207,.06)}
     <div class="zone zt" aria-hidden="true"><i>1</i><i>2</i><i>3</i><i>4</i></div>
     <div class="zone zl" aria-hidden="true"><i>A</i><i>B</i><i>C</i><i>D</i></div>
     <div class="htop2">
-      <div class="hname"><h1>Plan <em>&amp;</em> Power</h1><p>LUNEMOTH GAMES</p><span class="stk" id="streakTag" hidden></span></div>
+      <div class="hname"><h1>Plan <em>&amp;</em> Power</h1><p>LUNEMOTH GAMES</p><span class="real" id="realTag"></span><br><span class="stk" id="streakTag" hidden></span></div>
       <button id="muteBtn" class="ib" aria-label="Ayarlar" data-l></button>
     </div>
     <button id="houseBtn" class="house"></button>
@@ -725,6 +726,7 @@ const EN={
 "Kısım 4 · Üç faz ve motor":"Part 4 · Three phases and motors",
 "Kısım 5 · Kumanda":"Part 5 · Motor control",
 "Kısım 6 · Zaman rölesi":"Part 6 · Timer relay",
+"Gerçek elektrik kurallarına ve tesisatına dayanır.":"Based on real-world electrical rules and wiring.",
 "Bant hattı":"Conveyor line",
 "{0} sn":"{0} s",
 "Süreyi seç. İş emrine bak. Röle sayarken değiştirirsen baştan sayar.":"Pick the time. Check the work order. If you change it while the relay is counting, it starts over.",
@@ -3537,6 +3539,7 @@ function renderHouse(){
   if(h.lit.some(n=>!(saved.roomsLit||[]).includes(n))){saved.roomsLit=h.lit;persist()}
 }
 function renderMenu(){
+  $('realTag').textContent=TL('Gerçek elektrik kurallarına ve tesisatına dayanır.').replace(/\.$/,'');
   renderHouse();
   const done=doneCount(),nx=nextLevel(),L=LEVELS[nx];
   {const n=streakNow(),el=$('streakTag');el.hidden=!n;el.innerHTML=n?IC.flame+TL('{0} gündür seri',n):''}
